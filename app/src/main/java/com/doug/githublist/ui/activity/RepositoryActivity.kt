@@ -1,4 +1,4 @@
-package com.doug.githublist.ui
+package com.doug.githublist.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
