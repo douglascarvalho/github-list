@@ -1,11 +1,13 @@
 package com.doug.githublist.ui.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.doug.githublist.R
-import com.doug.githublist.data.Repository
 import com.doug.githublist.ui.adapter.RepositoryAdapter
+import com.doug.githublist.ui.viewmodel.RepositoryViewModel
 import kotlinx.android.synthetic.main.activity_repository.*
 
 class RepositoryActivity : AppCompatActivity() {
@@ -16,12 +18,15 @@ class RepositoryActivity : AppCompatActivity() {
 
         var repositoryAdater = RepositoryAdapter();
 
-        repositoryAdater.repositories = listOf(
-                Repository(1, "um", "um"),
-                Repository(2, "dois", "um"),
-                Repository(3, "tres", "um"))
+        var repositoryViewModel =
+                ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
 
-        repository_list.layoutManager = LinearLayoutManager(this)
+        repositoryViewModel.init()
+        repositoryViewModel.repositories.observe(this, Observer {
+            repositoryAdater.repositories = it!!
+            repositoryAdater.notifyDataSetChanged()
+        })
+
         repository_list.adapter = repositoryAdater;
     }
 }

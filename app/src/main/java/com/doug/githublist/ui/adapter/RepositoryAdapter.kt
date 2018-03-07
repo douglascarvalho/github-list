@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.doug.githublist.R
-import com.doug.githublist.data.Repository
+import com.doug.githublist.data.model.Repository
 import kotlinx.android.synthetic.main.item_repository.view.*
 
 class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
 
-    lateinit var repositories: List<Repository>;
+    var repositories: List<Repository>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)
@@ -18,18 +18,22 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return repositories.size
+        return repositories?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindRepository(repositories[position])
+        holder.bindRepository(repositories!![position])
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
         fun bindRepository(repository: Repository) {
-            itemView.name.text = repository.name
+            itemView.repositoryName.text = repository.name
+            itemView.repositoryDescription.text = repository.description
+            itemView.forksCount.text = repository.forksCount.toString()
+            itemView.starsCount.text = repository.starsCount.toString()
+            itemView.ownerLogin.text = repository.owner.login
+            itemView.ownerAvatar.setImageDrawable(
+                    itemView.context.resources.getDrawable(R.drawable.avatar_placeholder))
         }
-
     }
 }
