@@ -1,12 +1,11 @@
 package com.doug.githublist.data.datasource
 
-import com.doug.githublist.data.model.Repository
 import com.doug.githublist.data.api.GithubService
-import com.doug.githublist.data.model.RepositoryResponse
+import com.doug.githublist.data.model.Repository
 
 class GithubDataSource {
 
-    val githubService by lazy {
+    private val githubService by lazy {
         GithubService.create()
     }
 

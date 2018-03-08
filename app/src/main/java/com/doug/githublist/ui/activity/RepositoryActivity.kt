@@ -2,9 +2,8 @@ package com.doug.githublist.ui.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.app.AppCompatActivity
 import com.doug.githublist.R
 import com.doug.githublist.ui.adapter.RepositoryAdapter
 import com.doug.githublist.ui.viewmodel.RepositoryViewModel
