@@ -4,6 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.doug.githublist.R
 import com.doug.githublist.data.model.Repository
 import kotlinx.android.synthetic.main.item_repository.view.*
@@ -27,13 +30,24 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindRepository(repository: Repository) {
-            itemView.repositoryName.text = repository.name
-            itemView.repositoryDescription.text = repository.description
-            itemView.forksCount.text = repository.forksCount.toString()
-            itemView.starsCount.text = repository.starsCount.toString()
-            itemView.ownerLogin.text = repository.owner.login
-            itemView.ownerAvatar.setImageDrawable(
-                    itemView.context.resources.getDrawable(R.drawable.avatar_placeholder))
+            with(repository) {
+                itemView.repositoryName.text = name
+                itemView.repositoryDescription.text = description
+                itemView.forksCount.text = forksCount.toString()
+                itemView.starsCount.text = starsCount.toString()
+                itemView.ownerLogin.text = owner.login
+
+                Glide.with(itemView.context)
+                        .load(owner.avatarURL)
+                        .apply(options)
+                        .into(itemView.ownerAvatar)
+            }
+        }
+
+        companion object {
+            val options = RequestOptions()
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .transforms(RoundedCorners(70))
         }
     }
 }
